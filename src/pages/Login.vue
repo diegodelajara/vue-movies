@@ -34,7 +34,14 @@
                      </v-card-text>
                      <v-card-actions>
                         <v-spacer></v-spacer>
-                        <v-btn color="primary" @click="onLogin">Login</v-btn>
+                        <v-btn
+                           color="primary"
+                           @click="onLogin"
+                           depressed
+                           :loading="loading"
+                           :disabled="loading"
+                        >Login
+                        </v-btn>
                      </v-card-actions>
                   </v-card>
                </v-flex>
@@ -45,24 +52,44 @@
 </template>
 
 <script>
+
 export default {
    data() {
       return {
          errors: [],
+         loading: false,
+         pass: 'agile1234',
+         page: 1,
          username: 'agilesoft',
-         pass: 'agile1234'
       }
    },
    methods: {
-      onLogin(e) {
-         e.preventDefault();
-         console.log(this.username);
-         console.log(this.pass);
-         if (!this.name) {
-            this.errors.push('El nombre es obligatorio.');
-         }
-         if (!this.age) {
-            this.errors.push('La edad es obligatoria.');
+      async onLogin(e) {
+         e.preventDefault()
+
+         if (this.username && this.pass) {
+            this.loading = true
+            try {
+               const url = 'api/auth/login'
+               const resp = await this.$http.post(url, {
+                  username: this.username,
+                  password: this.pass
+               })
+               this.$store.commit('setIsLogged', true)
+               this.$store.commit('setUser', resp.data.data.user)
+               this.$store.commit('setToken', resp.data.data.payload.token)
+               this.$store.commit('setRefreshToken', resp.data.data.payload.refresh_token)
+               this.$router.push("/home")
+               // console.log('%c var', 'color:pink', this.$router)
+            } catch (error) {
+               console.log('%c error', 'color:tomato', error)
+            }
+            this.loading = false
+         } else {
+            if (!this.name)
+               this.errors.push('El nombre de usuario es obligatorio.')
+            if (!this.age)
+               this.errors.push('La contraseña es obligatoria.')
          }
       }
    }

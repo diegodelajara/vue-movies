@@ -2,31 +2,25 @@ import Vue from 'vue'
 import VueRouter from 'vue-router';
 import App from './App.vue'
 import vuetify from './plugins/vuetify';
+import http from './plugins/axios'
+import { store } from './store'
+import { routes } from "./routes";
 
 
-import Login from './pages/Login';
-import Home from './pages/Home'
 
-
-Vue.use(VueRouter);
+Vue.use(VueRouter)
+Vue.use(http)
 Vue.config.productionTip = false
 
 
 const router = new VueRouter({
-  routes: [
-     {
-        path: '/',
-        component: Login,
-     },
-     {
-        path: '/home',
-        component: Home,
-     }
-  ],
+  mode: "history",
+  routes
 });
 
 new Vue({
   vuetify,
   router,
+  store: store,
   render: h => h(App)
 }).$mount('#app')
