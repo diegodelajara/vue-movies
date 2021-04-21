@@ -1,5 +1,7 @@
 <template>
+  <v-app>
     <router-view class="myFont"></router-view>
+  </v-app>
 </template>
 
 <script>

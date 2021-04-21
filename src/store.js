@@ -13,6 +13,7 @@ export const store = new Vuex.Store({
     tokenType: '',
     refreshToken: '',
     movie: {},
+    movieId: '',
     imageBaseUrl: ''
   },
   mutations: {
@@ -36,6 +37,9 @@ export const store = new Vuex.Store({
     },
     setImageBaseUrl(state, payload) {
       state.imageBaseUrl = payload
+    },
+    setMovieId(state, payload) {
+      state.movieId = payload
     }
   },
   getters: {
@@ -56,6 +60,9 @@ export const store = new Vuex.Store({
     },
     getImageBaseUrl(state) {
       return state.imageBaseUrl
+    },
+    getMovieId(state) {
+      return state.movieId
     }
   },
   plugins: [createPersistedState()]

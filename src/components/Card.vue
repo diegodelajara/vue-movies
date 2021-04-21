@@ -3,6 +3,7 @@
     class="mx-auto my-12 "
     max-width="374"
     @click="openDetail()"
+    :height="cardHeight"
   >
     <template slot="progress">
       <v-progress-linear
@@ -13,16 +14,14 @@
     </template>
     <v-img
       height="250"
-      :src="baseImg + card.backdrop_path"
+      :src="image"
     ></v-img>
 
-    <v-card-title>{{ card.title }}</v-card-title>
+    <v-card-title>{{ title }}</v-card-title>
 
-    <v-card-text>
-      <div>{{ card.overview }}</div>
+    <v-card-text :style="`overflow-y: auto; height:${cardTextHeight}`">
+      <div class="text-truncate">{{ overview }}</div>
     </v-card-text>
-
-    <v-divider class="mx-4"></v-divider>
   </v-card>
 </template>
 
@@ -30,10 +29,34 @@
   export default {
     props: {
       card: {
+        required: true
+      },
+      title: {
         required: true,
-        type: Object
+        type: String,
+        default: 'asadasda'
+      },
+      idCard: {
+        required: true,
+        type: Number
+      },
+      image: {
+        required: true,
+        type: String
+      },
+      overview: {
+        required: true,
+        type: String
       },
       baseImg: {
+        required: true,
+        type: String
+      },
+      cardHeight: {
+        required: true,
+        type: String
+      },
+      cardTextHeight: {
         required: true,
         type: String
       }
