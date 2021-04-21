@@ -1,5 +1,5 @@
 <template>
-    <router-view></router-view>
+    <router-view class="myFont"></router-view>
 </template>
 
 <script>
@@ -9,6 +9,12 @@ export default {
 
   data: () => ({
     //
-  }),
-};
+  })
+}
 </script>
+
+<style>
+.myFont {
+  font-family: 'Montserrat', sans-serif; 
+}
+</style>

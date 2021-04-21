@@ -1,5 +1,7 @@
 import Vue from 'vue'
 import Vuex from 'vuex'
+import createPersistedState from "vuex-persistedstate";
+
 
 Vue.use(Vuex)
 
@@ -8,7 +10,10 @@ export const store = new Vuex.Store({
     isLogged: false,
     user: '',
     token: '',
-    refreshToken: ''
+    tokenType: '',
+    refreshToken: '',
+    movie: {},
+    imageBaseUrl: ''
   },
   mutations: {
     setIsLogged (state, value) {
@@ -20,8 +25,38 @@ export const store = new Vuex.Store({
     setToken(state, payload) {
       state.token = payload
     },
+    setTokenType(state, payload) {
+      state.tokenType = payload
+    },
     setRefreshToken(state, payload) {
       state.refreshToken = payload
+    },
+    setMovie(state, payload) {
+      state.movie = payload
+    },
+    setImageBaseUrl(state, payload) {
+      state.imageBaseUrl = payload
     }
-  }
+  },
+  getters: {
+    getUser(state) {
+      return state.user
+    },
+    getToken(state) {
+      return state.token
+    },
+    getTokenType(state) {
+      return state.tokenType
+    },
+    getRefreshToken(state) {
+      return state.refreshToken
+    },
+    getMovie(state) {
+      return state.movie
+    },
+    getImageBaseUrl(state) {
+      return state.imageBaseUrl
+    }
+  },
+  plugins: [createPersistedState()]
 })

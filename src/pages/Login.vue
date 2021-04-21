@@ -79,8 +79,8 @@ export default {
                this.$store.commit('setUser', resp.data.data.user)
                this.$store.commit('setToken', resp.data.data.payload.token)
                this.$store.commit('setRefreshToken', resp.data.data.payload.refresh_token)
+               this.$store.commit('setTokenType', resp.data.data.payload.type)
                this.$router.push("/home")
-               // console.log('%c var', 'color:pink', this.$router)
             } catch (error) {
                console.log('%c error', 'color:tomato', error)
             }
