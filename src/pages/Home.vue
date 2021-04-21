@@ -1,6 +1,6 @@
 <template>
   <section>
-
+      <Header />
       <div >
         <h2>Películas en estreno</h2>
         <div class="now-playing">
@@ -13,14 +13,6 @@
               :baseImg="imageBaseUrl"
               @on-open-details="onOpenDetails"
             />
-            <!-- <div class="card movie-card" v-for="(item, key) in nowPlayingMovies" :key="key">
-              <img :src="imageBaseUrl + item.backdrop_path" class="card-img-top" alt="...">
-              <div class="card-body">
-                <h5 class="card-title">{{item.title}}</h5>
-                <span class="movie-info">{{ item.release_date }}</span>
-                <span class="movie-info float-right"><i class="fas fa-star"></i>{{ item.popularity }}</span>
-              </div>
-            </div> -->
           </div>
         </div>
         
@@ -44,13 +36,18 @@
 </template>
 
 <script>
-import Card from "../components/Card";
+import Card from "../components/Card"
+import Header from "../components/Header"
+import { myMixin } from "../mixins";
+
 import {mapGetters} from 'vuex'
 
 export default {
   components: {
-    Card
+    Card,
+    Header
   },
+  mixins: [myMixin],
   data () {
     return {
       imageBaseUrl: '',
@@ -58,6 +55,11 @@ export default {
       morePopularMovies: [],
       nowPlayingPage: 1,
       morePopularPage: 1
+    }
+  },
+  beforeCreate() {
+    if (!this.$store.getters.getUser) {
+      this.$router.push('/')
     }
   },
   created() {
@@ -76,7 +78,7 @@ export default {
         this.imageBaseUrl = resp.data.imageBaseUrl
         this.nowPlayingMovies = resp.data.data
       } catch (error) {
-        console.log('%c statusCode', 'color:tomato', error.error)
+        this.onRefreshToken()
       }
     },
     onOpenDetails(movie){

@@ -30,6 +30,11 @@
 import {mapGetters} from 'vuex'
 
 export default {
+  beforeCreate() {
+    if (!this.$store.getters.getUser) {
+      this.$router.push('/')
+    }
+  },
   computed: {
     ...mapGetters([
       'getImageBaseUrl',
